@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aidemo
+  namespace: ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aidemo
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5 
+  template:
+    metadata:
+      labels:
+        app: aidemo
+    spec:
+      # nodeSelector:
+      #   "kubernetes.io/os": linux
+      # imagePullSecrets:
+      # - name: arc-auth
+      volumes:
+      - name: aidemo
+        persistentVolumeClaim:
+          claimName: aidemo
+
+      containers:
+      - name: aidemo
+        image: danghung/aidemo:latest
+        volumeMounts:
+        - mountPath: "/app/server/public"
+          name: aidemo
+
+        # env:
+        # - name: DB_HOST
+        #   value: "prod"
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 200m
+            memory: 200Mi
+          limits:
+            cpu: 1000m
+            memory: 1200Mi

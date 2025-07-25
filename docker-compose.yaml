@@ -1,0 +1,9 @@
+services:
+  app:
+    image: danghung/aidemo
+    container_name: aidemo
+    ports:
+      - 3000:3000
+    # working_dir: /app
+    volumes:
+      - ./user_data:/app/server/public
