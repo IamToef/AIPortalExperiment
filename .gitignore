@@ -1,8 +1,0 @@
-node_modules
-cert
-server/public
-user_data
-*.onnx
-__pycache__
-data
-apiServer/minenv
